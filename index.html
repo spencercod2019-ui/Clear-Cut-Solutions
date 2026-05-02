@@ -5,11 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clear & Cut Solutions | Premier Landscaping Services</title>
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS with Typography Plugin for formatting AI responses -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     
     <!-- Phosphor Icons for modern UI icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Markdown Parser for AI responses -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -72,6 +75,7 @@
                     <a href="#home" class="text-gray-600 hover:text-brand-600 font-medium transition-colors">Home</a>
                     <a href="#about" class="text-gray-600 hover:text-brand-600 font-medium transition-colors">About Us</a>
                     <a href="#services" class="text-gray-600 hover:text-brand-600 font-medium transition-colors">Services</a>
+                    <a href="#ai-designer" class="text-gray-600 hover:text-brand-600 font-medium transition-colors">AI Designer</a>
                     <a href="#testimonials" class="text-gray-600 hover:text-brand-600 font-medium transition-colors">Testimonials</a>
                 </nav>
 
@@ -97,6 +101,7 @@
                 <a href="#home" class="block px-3 py-3 text-base font-medium text-gray-800 hover:text-brand-600 hover:bg-brand-50 rounded-md">Home</a>
                 <a href="#about" class="block px-3 py-3 text-base font-medium text-gray-800 hover:text-brand-600 hover:bg-brand-50 rounded-md">About Us</a>
                 <a href="#services" class="block px-3 py-3 text-base font-medium text-gray-800 hover:text-brand-600 hover:bg-brand-50 rounded-md">Services</a>
+                <a href="#ai-designer" class="block px-3 py-3 text-base font-medium text-gray-800 hover:text-brand-600 hover:bg-brand-50 rounded-md">AI Designer</a>
                 <a href="#contact" class="block px-3 py-3 text-base font-medium text-brand-600 font-bold mt-4">Get a Free Quote</a>
             </div>
         </div>
@@ -106,7 +111,7 @@
     <section id="home" class="relative pt-20 pb-32 lg:pt-32 lg:pb-48 overflow-hidden min-h-[80vh] flex items-center">
         <!-- Background Image -->
         <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1558904541-efa843a96f0f?q=80&w=2000&auto=format&fit=crop" alt="Pristine landscaped home" class="w-full h-full object-cover object-center" />
+            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2000&auto=format&fit=crop" alt="Sunny suburban house with beautiful landscaping" class="w-full h-full object-cover object-center" />
             <div class="absolute inset-0 hero-overlay"></div>
         </div>
 
@@ -256,6 +261,55 @@
                         Reliable winter property management. We offer rapid-response snow blowing, shoveling, and professional de-icing to keep your driveways and walkways safe and accessible.
                     </p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Landscape Designer Section -->
+    <section id="ai-designer" class="py-24 bg-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                
+                <!-- Input Area -->
+                <div class="bg-brand-50 rounded-3xl p-8 lg:p-10 border border-brand-100 shadow-sm">
+                    <div class="inline-flex items-center gap-2 bg-brand-100 text-brand-700 px-4 py-1.5 rounded-full text-sm font-semibold mb-6">
+                        <i class="ph-fill ph-magic-wand text-lg"></i> Powered by AI
+                    </div>
+                    <h3 class="text-3xl font-serif font-bold text-gray-900 mb-4">Design Your Dream Yard</h3>
+                    <p class="text-gray-600 mb-6">Describe your outdoor space and what you're looking for. Our AI assistant will generate a custom landscaping concept tailored to the Illinois climate.</p>
+                    
+                    <form id="ai-form" class="space-y-4">
+                        <div>
+                            <label for="yard-description" class="block text-sm font-medium text-gray-700 mb-2">Tell us about your space (e.g., shady backyard, want low-maintenance and dog friendly)</label>
+                            <textarea id="yard-description" rows="5" class="w-full bg-white border border-gray-200 text-gray-800 px-4 py-3 rounded-xl focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-200 transition-colors resize-none shadow-sm" placeholder="I have a medium-sized backyard that gets full sun. I want to add some color but keep it low maintenance..."></textarea>
+                        </div>
+                        <button type="submit" id="generate-btn" class="w-full bg-brand-600 text-white px-6 py-4 rounded-xl font-semibold hover:bg-brand-700 transition-all shadow-md flex items-center justify-center gap-2 text-lg">
+                            <span>Generate Ideas ✨</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Output Area -->
+                <div class="bg-white rounded-3xl p-8 lg:p-10 border border-gray-100 shadow-xl min-h-[450px] flex flex-col">
+                    <h4 class="text-xl font-bold text-gray-900 mb-6 border-b border-gray-100 pb-4">Your Custom Concept</h4>
+                    
+                    <div id="ai-output" class="flex-grow prose prose-brand prose-sm sm:prose-base max-w-none text-gray-600 overflow-y-auto max-h-[400px] pr-2">
+                        <div class="h-full flex flex-col items-center justify-center text-center text-gray-400 space-y-4 py-10">
+                            <i class="ph-fill ph-plant text-6xl text-gray-200"></i>
+                            <p>Your personalized landscaping ideas will appear here.</p>
+                        </div>
+                    </div>
+                    
+                    <div id="ai-loading" class="hidden h-full flex-col items-center justify-center text-center py-10 space-y-4">
+                        <i class="ph ph-spinner animate-spin text-5xl text-brand-500"></i>
+                        <p class="text-brand-600 font-medium animate-pulse">Cultivating your landscape design...</p>
+                    </div>
+                    
+                    <div id="ai-error" class="hidden bg-red-50 text-red-600 p-4 rounded-xl mt-4 text-sm font-medium">
+                        Something went wrong while generating your ideas. Please try again later.
+                    </div>
+                </div>
+                
             </div>
         </div>
     </section>
@@ -414,6 +468,98 @@
             } else {
                 navbar.classList.remove('shadow-md');
                 navbar.classList.replace('border-gray-100', 'border-transparent');
+            }
+        });
+
+        // --- Gemini AI Integration ---
+        const apiKey = ""; // Provided by the runtime environment
+        const aiForm = document.getElementById('ai-form');
+        const generateBtn = document.getElementById('generate-btn');
+        const aiOutput = document.getElementById('ai-output');
+        const aiLoading = document.getElementById('ai-loading');
+        const aiError = document.getElementById('ai-error');
+        const yardInput = document.getElementById('yard-description');
+
+        async function fetchGeminiWithRetry(prompt, retries = 5) {
+            const delays = [1000, 2000, 4000, 8000, 16000];
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            
+            // Give the AI a persona customized to your business
+            const systemInstruction = `You are an expert landscape architect working for Clear & Cut Solutions in Plainfield, IL. 
+            The user will describe their outdoor space. 
+            Provide a concise, highly creative 3-point landscaping concept. 
+            Recommend specific plants that thrive in the Illinois climate (Zone 5b). 
+            Keep the tone professional, encouraging, and established. 
+            Format entirely in Markdown with headings (###) and bullet points. 
+            End by briefly encouraging them to request a free quote from Clear & Cut Solutions to make this dream a reality.`;
+
+            const payload = {
+                contents: [{ parts: [{ text: prompt }] }],
+                systemInstruction: { parts: [{ text: systemInstruction }] }
+            };
+
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    
+                    const data = await response.json();
+                    return data.candidates?.[0]?.content?.parts?.[0]?.text;
+                } catch (error) {
+                    if (i === retries - 1) throw error;
+                    await new Promise(resolve => setTimeout(resolve, delays[i]));
+                }
+            }
+        }
+
+        aiForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const prompt = yardInput.value.trim();
+            if (!prompt) return;
+
+            // Update UI to loading state
+            generateBtn.disabled = true;
+            generateBtn.classList.add('opacity-70', 'cursor-not-allowed');
+            aiOutput.classList.add('hidden');
+            aiError.classList.add('hidden');
+            aiLoading.classList.remove('hidden');
+            aiLoading.classList.add('flex');
+
+            try {
+                // Call the Gemini API
+                const responseText = await fetchGeminiWithRetry(prompt);
+                
+                if (responseText) {
+                    // Convert Markdown to HTML and display
+                    aiOutput.innerHTML = marked.parse(responseText);
+                    aiOutput.classList.remove('hidden');
+                    aiOutput.classList.add('block');
+                } else {
+                    throw new Error('Empty response from API');
+                }
+            } catch (error) {
+                console.error("AI Generation Error:", error);
+                aiError.classList.remove('hidden');
+                
+                // Show default placeholder on error
+                aiOutput.innerHTML = `
+                    <div class="h-full flex flex-col items-center justify-center text-center text-gray-400 space-y-4 py-10">
+                        <i class="ph-fill ph-plant text-6xl text-gray-200"></i>
+                        <p>Your personalized landscaping ideas will appear here.</p>
+                    </div>`;
+                aiOutput.classList.remove('hidden');
+                aiOutput.classList.add('block');
+            } finally {
+                // Reset UI
+                aiLoading.classList.add('hidden');
+                aiLoading.classList.remove('flex');
+                generateBtn.disabled = false;
+                generateBtn.classList.remove('opacity-70', 'cursor-not-allowed');
             }
         });
     </script>
